@@ -18,9 +18,9 @@ body {
 }
 
 .card {
-    margin: 100px auto 0;
-    width: 400px;
-    height: 600px;
+    /* margin: 100px auto 0; */
+    width: 800px;
+    height: 400px;
 }
 
 .card__inner {

@@ -18,19 +18,18 @@ function performAction(e){
         .then(weatherbitRes => {
             get(`https://pixabay.com/api/${pixabay_key}&q=${weatherbitRes.data[0].city_name}&image_type=photo`)
               .then(res => {
-                  console.log(res.hits[0].largeImageURL);
-                  console.log(res.hits[0]);
-                  console.log(weatherbitRes.data[0].weather);
+                console.log(res.hits[0]);
                         postData('/create', {
                              city: geoNamesRes.geonames[0].name,
                              date: calculateDay(),
                              temp: weatherbitRes.data[0].temp,
                              icon: weatherbitRes.data[0].weather.icon,
                              description: weatherbitRes.data[0].weather.description,
+                             image: res.hits[0].largeImageURL
                         });
-              });
+              }).then(() => updateUI());
         });
-    }).then(() => updateUI());
+    })
   }
 
   async function get(url) {
@@ -75,7 +74,7 @@ const updateUI = async () => {
 
     try{
       resCity.innerHTML = request.city;
-      newDate.innerHTML = `${request.date} date away`;
+      newDate.innerHTML = `${request.date} days away`;
       icon.src = `../icons/${request.icon}.png`;
       description.innerHTML = request.description;
       temp.innerHTML = `${request.temp}°`;
