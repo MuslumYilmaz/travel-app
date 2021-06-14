@@ -18,25 +18,28 @@ document.getElementById('generate').addEventListener('click', performAction)
 
 function performAction(e){
   get(`${url}${city.value}${geoNames_key}`)
-    .then(newData => {
-      get(`https://api.weatherbit.io/v2.0/current?lat=${newData.geonames[0].lat}&lon=${newData.geonames[0].lng}${weatherbit_key}&include=minutely`)
-        .then(res => {
-            console.log(res);
-            get(`https://pixabay.com/api/${pixabay_key}&q=${res.data[0].city_name}&image_type=photo`)
+    .then(geoNamesRes => {
+      get(`https://api.weatherbit.io/v2.0/current?lat=${geoNamesRes.geonames[0].lat}&lon=${geoNamesRes.geonames[0].lng}${weatherbit_key}&include=minutely`)
+        .then(weatherbitRes => {
+            get(`https://pixabay.com/api/${pixabay_key}&q=${weatherbitRes.data[0].city_name}&image_type=photo`)
               .then(res => {
                   console.log(res.hits[0].largeImageURL);
-              })
-        })
-      // postData('/create', {
-      //   name: newData.name,
-      //   description: newData.weather[0].main,
-      //   temp: newData.main.temp,
-      //   feelings: feelings.value,
-      //   feels_like: newData.main.feels_like,
-      //   date: date
-      // });
-    })
-    // .then(() => updateUI());
+                  console.log(res.hits[0]);
+                  console.log(weatherbitRes.data[0].weather);
+                        postData('/create', {
+                             name: geoNamesRes.geonames[0].name,
+                        //   name: newData.name,
+                        //   description: newData.weather[0].main,
+                             temp: weatherbitRes.data[0].temp,
+                             icon: weatherbitRes.data[0].weather.icon,
+                             description: weatherbitRes.data[0].weather.description,
+                        //   feelings: feelings.value,
+                        //   feels_like: newData.main.feels_like,
+                        //   date: date
+                        });
+              });
+        });
+    }).then(() => updateUI());
   }
 
   async function get(url) {
@@ -71,18 +74,23 @@ function performAction(e){
 const newDate = document.getElementById('date');
 const newTemp = document.getElementById('temp');
 const newContent = document.getElementById('content');
-//const city = document.getElementById('city');
+const resCity = document.getElementById('resCity');
+const description = document.getElementById('description');
+let icon = document.querySelector('.image-icon');
 
 const updateUI = async () => {
+  console.log(icon)
   const request = await get("/all");
 
     try{
-  //    city.innerHTML = request.name;
+      resCity.innerHTML = request.name;
       newDate.innerHTML = date;
-      newTemp.innerHTML = request.temp;
-      description.innerHTML = request.description
-      feels_like.innerHTML = request.feels_like;
-      newContent.innerHTML = `How I'm feeling: ${request.feelings}`;
+      icon.src = `../icons/${request.icon}.png`;
+      description.innerHTML = request.description;
+      temp.innerHTML = `${request.temp}°`;
+      // newTemp.innerHTML = request.temp;
+      // feels_like.innerHTML = request.feels_like;
+      // newContent.innerHTML = `How I'm feeling: ${request.feelings}`;
       card.classList.toggle('is-flipped');
     } catch(error){
       console.log("error", error);
