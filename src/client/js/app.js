@@ -1,7 +1,6 @@
 /* Global Variables */
 const city = document.getElementById('city');
-const feelings = document.getElementById('feelings');
-const feels_like = document.getElementById('feels-like');
+const date = document.getElementById('date-picker');
 const card = document.querySelector('.card__inner');
 const backButton = document.querySelector('.go-back');
 
@@ -9,10 +8,6 @@ const url = `http://api.geonames.org/searchJSON?q=`
 const geoNames_key = `&maxRows=1&username=${geonames_key}`
 const weatherbit_key = `&key=${weatherBit_key}`
 const pixabay_key = `?key=${pixaBay_key}`
-
-// Create a new date instance dynamically with JS
-let d = new Date();
-let date = d.getMonth()+1+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 document.getElementById('generate').addEventListener('click', performAction)
 
@@ -27,15 +22,11 @@ function performAction(e){
                   console.log(res.hits[0]);
                   console.log(weatherbitRes.data[0].weather);
                         postData('/create', {
-                             name: geoNamesRes.geonames[0].name,
-                        //   name: newData.name,
-                        //   description: newData.weather[0].main,
+                             city: geoNamesRes.geonames[0].name,
+                             date: calculateDay(),
                              temp: weatherbitRes.data[0].temp,
                              icon: weatherbitRes.data[0].weather.icon,
                              description: weatherbitRes.data[0].weather.description,
-                        //   feelings: feelings.value,
-                        //   feels_like: newData.main.feels_like,
-                        //   date: date
                         });
               });
         });
@@ -83,14 +74,12 @@ const updateUI = async () => {
   const request = await get("/all");
 
     try{
-      resCity.innerHTML = request.name;
-      newDate.innerHTML = date;
+      resCity.innerHTML = request.city;
+      newDate.innerHTML = `${request.date} date away`;
       icon.src = `../icons/${request.icon}.png`;
       description.innerHTML = request.description;
       temp.innerHTML = `${request.temp}°`;
-      // newTemp.innerHTML = request.temp;
-      // feels_like.innerHTML = request.feels_like;
-      // newContent.innerHTML = `How I'm feeling: ${request.feelings}`;
+
       card.classList.toggle('is-flipped');
     } catch(error){
       console.log("error", error);
@@ -101,3 +90,14 @@ const updateUI = async () => {
   backButton.addEventListener('click', () => {
     card.classList.toggle('is-flipped');
   });
+
+  function calculateDay() {
+    let start = new Date().getTime();
+    let end = new Date(date.value).getTime();
+    let diff = 0;
+    let days = 1000 * 60 * 60 * 24;
+
+    diff = end - start;
+    console.log(Math.floor(diff / days))
+    return Math.floor(diff / days);
+  }
