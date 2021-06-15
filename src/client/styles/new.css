@@ -1,7 +1,7 @@
-.place-image {
+#saved-trip-image {
     width: 40vw;
     height: 70vh;
-    background-image: url("../images/highlands.jpg");
+    /* background-image: url("../images/highlands.jpg"); */
     background-size: cover;
     transform: skew(15deg);
     position: relative;
@@ -27,14 +27,6 @@
     flex-direction: row;
 }
 
-.saved-trip-info {
-    width: 30vw;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-gap: 150px;
-}
-
 .trip-info {
     width: 30vw;
     display: grid;
@@ -43,6 +35,36 @@
     "desc temp icon"
     "btn btn btn";
     align-items: center;
+}
+
+.saved-trip-info {
+    width: 30vw;
+    display: grid;
+    grid-template-areas: 
+    "hd hd hd"
+    "cit cit tp"
+    "des des ic";
+    align-items: center;
+}
+
+.s-header {
+    grid-area: hd;
+}
+
+.s-city {
+    grid-area: cit;
+}
+
+.s-temp {
+    grid-area: tp;
+}
+
+.s-desc {
+    grid-area: des;
+}
+
+.s-icon {
+    grid-area: ic;
 }
 
 .resCity{

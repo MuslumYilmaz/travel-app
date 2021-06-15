@@ -67,7 +67,7 @@ const newContent = document.getElementById('content');
 const resCity = document.getElementById('resCity');
 const description = document.getElementById('description');
 let icon = document.querySelector('.image-icon');
-const image = document.getElementById('place-image')
+const image = document.getElementById('place-image');
 
 const updateUI = async () => {
   console.log(icon)
@@ -101,3 +101,21 @@ const updateUI = async () => {
     console.log(Math.floor(diff / days))
     return Math.floor(diff / days);
   }
+
+  const lastTripImage = document.getElementById('saved-trip-image');
+  const savedCity = document.getElementById('saved-city');
+  const savedTemp = document.getElementById('saved-temp');
+  const savedDescription = document.getElementById('saved-description');
+  const savedIcon = document.getElementById('saved-icon');
+
+  class Trip {
+    constructor(city, icon, description, temp, image) {
+      savedCity.innerHTML = city;
+      savedTemp.innerHTML = temp;
+      savedIcon.src = icon;
+      savedDescription.innerHTML = description;
+      lastTripImage.style.backgroundImage = `url('${image}')`;
+    }
+  }
+
+  let lastTrip = new Trip("Istanbul", `../icons/u00n.png`, "Overcast clouds", "18°", "../images/highlands.jpg");
