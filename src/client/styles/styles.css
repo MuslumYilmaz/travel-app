@@ -111,6 +111,12 @@ textarea {
     font-weight: 600;
     font-size: 18px;
     cursor: pointer;
+    transition: all 1s;
+}
+
+#generate:hover {
+    background: #FE4880;
+    color: var(--light);
 }
 
 .go-back {
@@ -126,6 +132,12 @@ textarea {
     font-size: 18px;
     cursor: pointer;
     margin-left: 100px;
+    transition: all 1s;
+}
+
+#go-back:hover {
+    background: #FE4880;
+    color: var(--light);
 }
 
 .flex-display {
