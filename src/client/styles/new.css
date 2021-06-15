@@ -1,0 +1,66 @@
+.place-image {
+    width: 40vw;
+    height: 70vh;
+    background-image: url("../images/highlands.jpg");
+    background-size: cover;
+    transform: skew(15deg);
+    position: relative;
+    right: 250px;
+}
+
+#place-image {
+    width: 40vw;
+    height: 70vh;
+    background-size: cover;
+    transform: skew(15deg);
+    position: relative;
+    right: 150px;
+}
+
+.card__face--front {
+    display: flex;
+    flex-direction: row;
+}
+
+.card__face--back {
+    display: flex;
+    flex-direction: row;
+}
+
+.saved-trip-info {
+    width: 30vw;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 150px;
+}
+
+.trip-info {
+    width: 30vw;
+    display: grid;
+    grid-template-areas: 
+    "header header header"
+    "desc temp icon"
+    "btn btn btn";
+    align-items: center;
+}
+
+.resCity{
+    grid-area: header;
+}
+
+#temp {
+    grid-area: temp;
+}
+
+#description {
+    grid-area: desc;
+}
+
+#image-icon {
+    grid-area: icon
+}
+
+.go-back {
+    grid-area: btn;
+}

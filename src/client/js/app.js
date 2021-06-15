@@ -67,17 +67,18 @@ const newContent = document.getElementById('content');
 const resCity = document.getElementById('resCity');
 const description = document.getElementById('description');
 let icon = document.querySelector('.image-icon');
+const image = document.getElementById('place-image')
 
 const updateUI = async () => {
   console.log(icon)
   const request = await get("/all");
 
     try{
-      resCity.innerHTML = request.city;
-      newDate.innerHTML = `${request.date} days away`;
+      resCity.innerHTML = `${request.city} is ${request.date} days away`;
       icon.src = `../icons/${request.icon}.png`;
       description.innerHTML = request.description;
       temp.innerHTML = `${request.temp}°`;
+      image.style.backgroundImage = `url('${request.image}')`;
 
       card.classList.toggle('is-flipped');
     } catch(error){
