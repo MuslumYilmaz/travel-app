@@ -21,24 +21,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
 document.getElementById('generate').addEventListener('click', performAction)
 
 function performAction(e){
-  get(`${url}${city.value}${geoNames_key}`)
-    .then(geoNamesRes => {
-      get(`https://api.weatherbit.io/v2.0/current?lat=${geoNamesRes.geonames[0].lat}&lon=${geoNamesRes.geonames[0].lng}${weatherbit_key}&include=minutely`)
-        .then(weatherbitRes => {
-            get(`https://pixabay.com/api/${pixabay_key}&q=${weatherbitRes.data[0].city_name}&image_type=photo`)
-              .then(res => {
-                console.log(res.hits[0]);
-                        postData('/create', {
-                             city: geoNamesRes.geonames[0].name,
-                             date: calculateDay(),
-                             temp: weatherbitRes.data[0].temp,
-                             icon: weatherbitRes.data[0].weather.icon,
-                             description: weatherbitRes.data[0].weather.description,
-                             image: res.hits[0].largeImageURL
-                        });
-              }).then(() => updateUI());
-        });
-    })
+        if (calculateDay() <= 7 && calculateDay >= 0) {
+          weatherbitDaily();
+        } else if (calculateDay() > 7) {
+          weatherbitForecast();
+        } else {
+          return;
+        }
   }
 
   async function get(url) {
@@ -132,4 +121,48 @@ const updateUI = async () => {
       savedDescription.innerHTML = description;
       lastTripImage.style.backgroundImage = `url('${image}')`;
     }
+  }
+
+  // function to run if trip will take place longer than 7 days
+  function weatherbitForecast() {
+    get(`${url}${city.value}${geoNames_key}`)
+    .then(geoNamesRes => {
+      get(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${geoNamesRes.geonames[0].lat}&lon=${geoNamesRes.geonames[0].lng}${weatherbit_key}`)
+        .then(weatherbitRes => {
+            get(`https://pixabay.com/api/${pixabay_key}&q=${geoNamesRes.geonames[0].name}&image_type=photo`)
+              .then(res => {
+                console.log(weatherbitRes.data[0]);
+                        postData('/create', {
+                             city: geoNamesRes.geonames[0].name,
+                             date: calculateDay(),
+                             temp: (weatherbitRes.data[0].app_max_temp + weatherbitRes.data[0].app_min_temp) / 2, // calculate average forecast
+                             icon: weatherbitRes.data[0].weather.icon,
+                             description: weatherbitRes.data[0].weather.description,
+                             image: res.hits[0].largeImageURL
+                        });
+              }).then(() => updateUI());
+        });
+    })
+  }
+
+  // function to run if trip will take place less than or equals to 7 days
+  function weatherbitDaily() {
+    get(`${url}${city.value}${geoNames_key}`)
+    .then(geoNamesRes => {
+      get(`https://api.weatherbit.io/v2.0/current?lat=${geoNamesRes.geonames[0].lat}&lon=${geoNamesRes.geonames[0].lng}${weatherbit_key}&include=minutely`)
+        .then(weatherbitRes => {
+            get(`https://pixabay.com/api/${pixabay_key}&q=${weatherbitRes.data[0].city_name}&image_type=photo`)
+              .then(res => {
+                console.log("I am daily");
+                        postData('/create', {
+                             city: geoNamesRes.geonames[0].name,
+                             date: calculateDay(),
+                             temp: weatherbitRes.data[0].temp,
+                             icon: weatherbitRes.data[0].weather.icon,
+                             description: weatherbitRes.data[0].weather.description,
+                             image: res.hits[0].largeImageURL
+                        });
+              }).then(() => updateUI());
+        });
+    })
   }
