@@ -92,6 +92,12 @@ input {
     margin: 10px;
 }
 
+input:focus {
+    outline: none !important;
+    border:1px solid black;
+    box-shadow: 0 0 10px #719ECE;
+}
+
 textarea {
     width: 300px;
     height: 200px;
