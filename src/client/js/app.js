@@ -4,10 +4,19 @@ const date = document.getElementById('date-picker');
 const card = document.querySelector('.card__inner');
 const backButton = document.querySelector('.go-back');
 
-const url = `http://api.geonames.org/searchJSON?q=`
-const geoNames_key = `&maxRows=1&username=${geonames_key}`
-const weatherbit_key = `&key=${weatherBit_key}`
-const pixabay_key = `?key=${pixaBay_key}`
+const url = `http://api.geonames.org/searchJSON?q=`;
+const geoNames_key = `&maxRows=1&username=${geonames_key}`;
+const weatherbit_key = `&key=${weatherBit_key}`;
+const pixabay_key = `?key=${pixaBay_key}`;
+
+window.addEventListener('DOMContentLoaded', (event) => {
+  if (localStorage.getItem("trip") == null) {
+    localStorage.setItem("trip", null);
+  }
+  let trip = JSON.parse(localStorage.getItem("trip"));
+
+  let lastTrip = new Trip(trip.city, trip.icon, trip.description, trip.temp, trip.image);
+});
 
 document.getElementById('generate').addEventListener('click', performAction)
 
@@ -80,6 +89,10 @@ const updateUI = async () => {
       temp.innerHTML = `${request.temp}°`;
       image.style.backgroundImage = `url('${request.image}')`;
 
+      let newTrip = {"city": request.city, "icon": `../icons/${request.icon}.png`, "description": request.description, "temp": request.temp, "image": request.image }
+      
+      localStorage.setItem("trip", JSON.stringify(newTrip));
+
       card.classList.toggle('is-flipped');
     } catch(error){
       console.log("error", error);
@@ -88,6 +101,9 @@ const updateUI = async () => {
 
   // card-flip
   backButton.addEventListener('click', () => {
+    let trip = JSON.parse(localStorage.getItem("trip"));
+
+    let lastTrip = new Trip(trip.city, trip.icon, trip.description, trip.temp, trip.image);
     card.classList.toggle('is-flipped');
   });
 
@@ -117,5 +133,3 @@ const updateUI = async () => {
       lastTripImage.style.backgroundImage = `url('${image}')`;
     }
   }
-
-  let lastTrip = new Trip("Istanbul", `../icons/u00n.png`, "Overcast clouds", "18°", "../images/highlands.jpg");
