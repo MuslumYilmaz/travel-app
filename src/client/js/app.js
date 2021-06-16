@@ -2,6 +2,9 @@ import { weatherbitDaily, weatherbitForecast } from "./apiHandler";
 import { calculateDay } from "./calculateDay";
 import { Trip } from "./tripClass";
 
+var requireContext = require.context("../icons", true, /^\.\/.*\.png$/);
+requireContext.keys().map(requireContext);
+
 /* Global Variables */
 const city = document.getElementById('city');
 export const date = document.getElementById('date-picker');
