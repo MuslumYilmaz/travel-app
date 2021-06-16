@@ -1,10 +1,15 @@
+import { geonames_key, weatherBit_key, pixaBay_key } from "./keys";
+import { get, postData, updateUI } from './app';
+import { calculateDay } from "./calculateDay";
+import { date } from './app';
+
 const url = `http://api.geonames.org/searchJSON?q=`;
 const geoNames_key = `&maxRows=1&username=${geonames_key}`;
 const weatherbit_key = `&key=${weatherBit_key}`;
 const pixabay_key = `?key=${pixaBay_key}`;
 
   // function to run if trip will take place longer than 7 days
-  function weatherbitForecast() {
+  export function weatherbitForecast() {
     get(`${url}${city.value}${geoNames_key}`)
     .then(geoNamesRes => {
       get(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${geoNamesRes.geonames[0].lat}&lon=${geoNamesRes.geonames[0].lng}${weatherbit_key}`)
@@ -26,7 +31,7 @@ const pixabay_key = `?key=${pixaBay_key}`;
   }
 
   // function to run if trip will take place less than or equals to 7 days
-  function weatherbitDaily() {
+  export function weatherbitDaily() {
     get(`${url}${city.value}${geoNames_key}`)
     .then(geoNamesRes => {
       get(`https://api.weatherbit.io/v2.0/current?lat=${geoNamesRes.geonames[0].lat}&lon=${geoNamesRes.geonames[0].lng}${weatherbit_key}&include=minutely`)

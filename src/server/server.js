@@ -5,11 +5,11 @@ let projectData = {};
 const express = require('express');
 const bodyParser = require ('body-parser') 
 const fetch = require('node-fetch');
-
+const path = require('path');
 // Start up an instance of app
 const app = express();
 
-app.use(express.static('src/client'));
+app.use(express.static('dist'));
 
 /* Middleware*/
 //Here we are configuring express to use body-parser as middle-ware.
@@ -46,7 +46,7 @@ function listening() {
 app.listen(port, listening());
 
 app.get('/', function (req, res) {
-    res.sendFile('/client/views/index.html', { root: __dirname + '/..' })
+  res.sendFile(path.resolve('dist/index.html'))
 });
 
 // Endpoint for testing express server

@@ -1,6 +1,10 @@
+import { weatherbitDaily, weatherbitForecast } from "./apiHandler";
+import { calculateDay } from "./calculateDay";
+import { Trip } from "./tripClass";
+
 /* Global Variables */
 const city = document.getElementById('city');
-const date = document.getElementById('date-picker');
+export const date = document.getElementById('date-picker');
 const card = document.querySelector('.card__inner');
 const backButton = document.querySelector('.go-back');
 
@@ -29,7 +33,7 @@ function performAction(e){
         }
   }
 
-  async function get(url) {
+  export async function get(url) {
     try {
     const res = await fetch(url);
     const json = await res.json();
@@ -41,7 +45,7 @@ function performAction(e){
     }
 
     /* Function to POST data */
-  const postData = async (url = '', data = {}) => {
+  export const postData = async (url = '', data = {}) => {
     const response = await fetch(url, {
       method: 'POST', 
       credentials: 'same-origin',
@@ -66,7 +70,7 @@ const description = document.getElementById('description');
 let icon = document.querySelector('.image-icon');
 const image = document.getElementById('place-image');
 
-const updateUI = async () => {
+export const updateUI = async () => {
   const request = await get("/all");
 
     try{

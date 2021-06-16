@@ -4,7 +4,7 @@ const savedTemp = document.getElementById('saved-temp');
 const savedDescription = document.getElementById('saved-description');
 const savedIcon = document.getElementById('saved-icon');
 
-class Trip {
+export class Trip {
   constructor(city, icon, description, temp, image) {
     savedCity.innerHTML = city;
     savedTemp.innerHTML = temp;

@@ -1,4 +1,4 @@
-function calculateDay(date) {
+export function calculateDay(date) {
     let start = new Date().getTime();
     let end = new Date(date).getTime();
     let diff = 0;
@@ -8,5 +8,3 @@ function calculateDay(date) {
     console.log(Math.floor(diff / days))
     return Math.floor(diff / days);
   }
-
-  export { calculateDay }
