@@ -7,7 +7,7 @@ const bodyParser = require ('body-parser')
 const fetch = require('node-fetch');
 
 // Start up an instance of app
-app = express();
+const app = express();
 
 app.use(express.static('src/client'));
 
@@ -53,3 +53,9 @@ app.get('/', function (req, res) {
 app.get('/testEndpoint', async (req, res) => {
     res.json({message: 'The endpoint test passed!'})
   });
+
+  app.get('/test', async (req, res) => {
+    res.json({message: 'pass!'})
+  })
+
+module.exports = app;

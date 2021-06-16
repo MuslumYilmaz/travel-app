@@ -8,3 +8,5 @@ function calculateDay(date) {
     console.log(Math.floor(diff / days))
     return Math.floor(diff / days);
   }
+
+  export { calculateDay }
