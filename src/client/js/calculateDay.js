@@ -1,6 +1,6 @@
-function calculateDay() {
+function calculateDay(date) {
     let start = new Date().getTime();
-    let end = new Date(date.value).getTime();
+    let end = new Date(date).getTime();
     let diff = 0;
     let days = 1000 * 60 * 60 * 24;
 

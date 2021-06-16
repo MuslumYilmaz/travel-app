@@ -14,7 +14,7 @@ const pixabay_key = `?key=${pixaBay_key}`;
                 console.log(weatherbitRes.data[0]);
                         postData('/create', {
                              city: geoNamesRes.geonames[0].name,
-                             date: calculateDay(),
+                             date: calculateDay(date.value),
                              temp: (weatherbitRes.data[0].app_max_temp + weatherbitRes.data[0].app_min_temp) / 2, // calculate average forecast
                              icon: weatherbitRes.data[0].weather.icon,
                              description: weatherbitRes.data[0].weather.description,
@@ -36,7 +36,7 @@ const pixabay_key = `?key=${pixaBay_key}`;
                 console.log("I am daily");
                         postData('/create', {
                              city: geoNamesRes.geonames[0].name,
-                             date: calculateDay(),
+                             date: calculateDay(date.value),
                              temp: weatherbitRes.data[0].temp,
                              icon: weatherbitRes.data[0].weather.icon,
                              description: weatherbitRes.data[0].weather.description,

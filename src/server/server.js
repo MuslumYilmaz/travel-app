@@ -48,3 +48,8 @@ app.listen(port, listening());
 app.get('/', function (req, res) {
     res.sendFile('/client/views/index.html', { root: __dirname + '/..' })
 });
+
+// Endpoint for testing express server
+app.get('/testEndpoint', async (req, res) => {
+    res.json({message: 'The endpoint test passed!'})
+  });

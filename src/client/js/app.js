@@ -7,6 +7,7 @@ const backButton = document.querySelector('.go-back');
 
 
 window.addEventListener('DOMContentLoaded', (event) => {
+  calculateDay();
   if (localStorage.getItem("trip") == null) {
     localStorage.setItem("trip", null);
   }
@@ -18,9 +19,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
 document.getElementById('generate').addEventListener('click', performAction)
 
 function performAction(e){
-        if (calculateDay() <= 7 && calculateDay >= 0) {
+  console.log(date.value);
+        if (calculateDay(date.value) <= 7 && calculateDay(date.value) >= 0) {
           weatherbitDaily();
-        } else if (calculateDay() > 7) {
+        } else if (calculateDay(date.value) > 7) {
           weatherbitForecast();
         } else {
           return;

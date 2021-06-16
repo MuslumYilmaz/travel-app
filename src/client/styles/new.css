@@ -1,7 +1,6 @@
 #saved-trip-image {
     width: 40vw;
     height: 70vh;
-    /* background-image: url("../images/highlands.jpg"); */
     background-size: cover;
     transform: skew(15deg);
     position: relative;
