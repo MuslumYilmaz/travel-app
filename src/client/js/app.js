@@ -4,10 +4,7 @@ const date = document.getElementById('date-picker');
 const card = document.querySelector('.card__inner');
 const backButton = document.querySelector('.go-back');
 
-const url = `http://api.geonames.org/searchJSON?q=`;
-const geoNames_key = `&maxRows=1&username=${geonames_key}`;
-const weatherbit_key = `&key=${weatherBit_key}`;
-const pixabay_key = `?key=${pixaBay_key}`;
+
 
 window.addEventListener('DOMContentLoaded', (event) => {
   if (localStorage.getItem("trip") == null) {
@@ -68,7 +65,6 @@ let icon = document.querySelector('.image-icon');
 const image = document.getElementById('place-image');
 
 const updateUI = async () => {
-  console.log(icon)
   const request = await get("/all");
 
     try{
@@ -95,74 +91,3 @@ const updateUI = async () => {
     let lastTrip = new Trip(trip.city, trip.icon, trip.description, trip.temp, trip.image);
     card.classList.toggle('is-flipped');
   });
-
-  function calculateDay() {
-    let start = new Date().getTime();
-    let end = new Date(date.value).getTime();
-    let diff = 0;
-    let days = 1000 * 60 * 60 * 24;
-
-    diff = end - start;
-    console.log(Math.floor(diff / days))
-    return Math.floor(diff / days);
-  }
-
-  const lastTripImage = document.getElementById('saved-trip-image');
-  const savedCity = document.getElementById('saved-city');
-  const savedTemp = document.getElementById('saved-temp');
-  const savedDescription = document.getElementById('saved-description');
-  const savedIcon = document.getElementById('saved-icon');
-
-  class Trip {
-    constructor(city, icon, description, temp, image) {
-      savedCity.innerHTML = city;
-      savedTemp.innerHTML = temp;
-      savedIcon.src = icon;
-      savedDescription.innerHTML = description;
-      lastTripImage.style.backgroundImage = `url('${image}')`;
-    }
-  }
-
-  // function to run if trip will take place longer than 7 days
-  function weatherbitForecast() {
-    get(`${url}${city.value}${geoNames_key}`)
-    .then(geoNamesRes => {
-      get(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${geoNamesRes.geonames[0].lat}&lon=${geoNamesRes.geonames[0].lng}${weatherbit_key}`)
-        .then(weatherbitRes => {
-            get(`https://pixabay.com/api/${pixabay_key}&q=${geoNamesRes.geonames[0].name}&image_type=photo`)
-              .then(res => {
-                console.log(weatherbitRes.data[0]);
-                        postData('/create', {
-                             city: geoNamesRes.geonames[0].name,
-                             date: calculateDay(),
-                             temp: (weatherbitRes.data[0].app_max_temp + weatherbitRes.data[0].app_min_temp) / 2, // calculate average forecast
-                             icon: weatherbitRes.data[0].weather.icon,
-                             description: weatherbitRes.data[0].weather.description,
-                             image: res.hits[0].largeImageURL
-                        });
-              }).then(() => updateUI());
-        });
-    })
-  }
-
-  // function to run if trip will take place less than or equals to 7 days
-  function weatherbitDaily() {
-    get(`${url}${city.value}${geoNames_key}`)
-    .then(geoNamesRes => {
-      get(`https://api.weatherbit.io/v2.0/current?lat=${geoNamesRes.geonames[0].lat}&lon=${geoNamesRes.geonames[0].lng}${weatherbit_key}&include=minutely`)
-        .then(weatherbitRes => {
-            get(`https://pixabay.com/api/${pixabay_key}&q=${weatherbitRes.data[0].city_name}&image_type=photo`)
-              .then(res => {
-                console.log("I am daily");
-                        postData('/create', {
-                             city: geoNamesRes.geonames[0].name,
-                             date: calculateDay(),
-                             temp: weatherbitRes.data[0].temp,
-                             icon: weatherbitRes.data[0].weather.icon,
-                             description: weatherbitRes.data[0].weather.description,
-                             image: res.hits[0].largeImageURL
-                        });
-              }).then(() => updateUI());
-        });
-    })
-  }
