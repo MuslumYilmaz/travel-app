@@ -9,6 +9,8 @@ module.exports = {
     entry: './src/client/index.js',
     stats: 'verbose',
     output: {
+        path: path.join(__dirname, "dist"),
+        filename: "main.js",
         libraryTarget: 'var',
         library: 'Client'
     },    module: {
@@ -27,9 +29,13 @@ module.exports = {
                 use: [
                   {
                     loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'icons/'
+                    }
                   }
                 ]  
-            }
+            },
         ]
     },
     plugins: [

@@ -50,10 +50,6 @@ app.get('/', function (req, res) {
 });
 
 // Endpoint for testing express server
-app.get('/testEndpoint', async (req, res) => {
-    res.json({message: 'The endpoint test passed!'})
-  });
-
   app.get('/test', async (req, res) => {
     res.json({message: 'pass!'})
   })

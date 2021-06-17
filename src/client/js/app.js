@@ -11,18 +11,6 @@ export const date = document.getElementById('date-picker');
 const card = document.querySelector('.card__inner');
 const backButton = document.querySelector('.go-back');
 
-
-
-window.addEventListener('DOMContentLoaded', (event) => {
-  calculateDay();
-  if (localStorage.getItem("trip") == null) {
-    localStorage.setItem("trip", null);
-  }
-  let trip = JSON.parse(localStorage.getItem("trip"));
-
-  let lastTrip = new Trip(trip.city, trip.icon, trip.description, trip.temp, trip.image);
-});
-
 document.getElementById('generate').addEventListener('click', performAction)
 
 function performAction(e){
