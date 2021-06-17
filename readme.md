@@ -24,8 +24,12 @@
 
 - run npm install
 
-- obtain API keys for Weatherbit, Pixabay and GeoNames with your own accounts and place them in .env file matching api keys in server.js
+- obtain API keys for Weatherbit, Pixabay and GeoNames with your own accounts and place them in keys.js file matching api keys in root folder
+- example: 
+  export const geonames_key = "API_KEY";
+  export const weatherBit_key = "API_KEY";
+  export const pixaBay_key = "API_KEY"; 
 
-- run npm run go
+- run npm run build-dev and npm run build-prod
 
-- go to [http://localhost:3000/](http://localhost:3000/)
+- go to [http://localhost:3000/] or (http://localhost:3001/)
