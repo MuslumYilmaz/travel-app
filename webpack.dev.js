@@ -57,6 +57,11 @@ module.exports = {
     devServer:{
         port: 3001,
         inline: true,
-        hot: true
+        hot: true,
+        proxy: {
+            '/': `http://localhost:3000`,
+            '/create': `http://localhost:3000/create`,
+            '/all': `http://localhost:3000/all`,
+          },
     }
 };
