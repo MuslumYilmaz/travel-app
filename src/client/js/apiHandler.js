@@ -1,4 +1,4 @@
-import { geonames_key, weatherBit_key, pixaBay_key } from "../../..keys";
+import { geonames_key, weatherBit_key, pixaBay_key } from "../../../keys";
 import { get, postData, updateUI } from './app';
 import { calculateDay } from "./calculateDay";
 import { date } from './app';
