@@ -10,12 +10,13 @@ requireContext.keys().map(requireContext);
 
 window.addEventListener('DOMContentLoaded', (event) => {
     calculateDay();
-    if (localStorage.getItem("trip") == null) {
-      localStorage.setItem("trip", null);
+    if (!localStorage.getItem("trip")) {
+      return;
+    } else {
+      let trip = JSON.parse(localStorage.getItem("trip"));
+      let lastTrip = new Trip(trip.city, trip.icon, trip.description, trip.temp, trip.image);
     }
-    let trip = JSON.parse(localStorage.getItem("trip"));
-    console.log(trip);
-    let lastTrip = new Trip(trip.city, trip.icon, trip.description, trip.temp, trip.image);
+
   });
 
 export {
