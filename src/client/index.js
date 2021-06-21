@@ -4,6 +4,7 @@ import { Trip } from './js/tripClass';
 
 import './styles/saved-trip.scss';
 import './styles/styles.scss';
+import './styles/media-queries.scss';
 
 var requireContext = require.context("./icons", true, /^\.\/.*\.png$/);
 requireContext.keys().map(requireContext);
