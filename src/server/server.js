@@ -33,7 +33,14 @@ app.get('/all', function (req, res){
 let data = [];
 
 app.post('/create', function(req, res){
-    projectData = req.body;
+  projectData = {
+    city: req.body.city,
+    date: req.body.date,
+    temp: req.body.temp,
+    icon: req.body.icon,
+    description: req.body.description,
+    image: req.body.image
+  }
 });
 
 // Setup Server
